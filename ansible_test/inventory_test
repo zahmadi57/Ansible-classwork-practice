@@ -1,0 +1,12 @@
+[proxy]
+ansible-node1
+
+[webservers]
+ansible-node2
+ansible-d-node1
+
+[database]
+ansible-d-node2
+
+[prod:children]
+webservers                                                                                                                   

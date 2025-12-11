@@ -1,0 +1,29 @@
+---
+- name: Remove and create /etc/motd based on host group
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Remove existing /etc/motd if it exists
+      ansible.builtin.file:
+        path: /etc/motd
+        state: absent
+
+    - name: Create /etc/motd for proxy servers
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "This Is PROXY Server"
+      when: "'proxy' in group_names"
+
+    - name: Create /etc/motd for webservers
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "These Are The WEBSERVERS"
+      when: "'webservers' in group_names"
+
+    - name: Create /etc/motd for database servers
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "This is DATABASE server"
+      when: "'database' in group_names"
+
